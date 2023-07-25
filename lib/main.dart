@@ -1,15 +1,13 @@
+import 'package:api_flutter/models/movie.dart';
 import 'package:api_flutter/repositories/movie_repository.dart';
+import 'package:flutter/widgets.dart';
 
 import 'function.dart';
 import 'models/bicycle.dart';
 import 'models/car.dart';
 import 'models/vehicel.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
-void main(List<String> argument) {
+void main(List<String> argument) async {
   var firstname = 'Nguyen';
   String lastname = 'Luong';
   print('$firstname - $lastname');
@@ -76,5 +74,12 @@ void main(List<String> argument) {
 
   print('fillterCar: $fillterCar');
 
-  fetchMoviesData();
+  // fetchMoviesData().then((movies) {
+  //   movies.forEach((element) {
+  //     print(element.title);
+  //   });
+  // });
+
+  var resultMovies = await fetchMoviesData();
+  print(resultMovies);
 }

@@ -4,13 +4,22 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../models/movie.dart';
+
 const getMoviesUrl = 'http://reactnative.dev/movies.json';
 
-void fetchMoviesData() async {
-  final response = await http.get(Uri.parse(getMoviesUrl));
+Future<List<Movie>> fetchMoviesData() async {
+  List<Movie> movies = [];
 
-  if (response.statusCode == 200) {
-    Map<String, dynamic> json = jsonDecode(response.body);
-    print(json);
+  try {
+    final response = await http.get(Uri.parse(getMoviesUrl));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> json = jsonDecode(response.body);
+      movies =
+          (json['movies'] as List).map((item) => Movie.fromJson(item)).toList();
+    }
+    return movies;
+  } on Exception catch (e) {
+    throw Exception(e);
   }
 }
